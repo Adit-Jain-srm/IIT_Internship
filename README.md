@@ -118,14 +118,6 @@ Both algorithms evaluate clustering quality using:
   - Y: 0 to 512
   - Z: 0 to 99
 
-### Memory Optimization
-
-For large datasets, the DBSCAN implementation includes:
-- Chunked processing (30k-50k points per chunk)
-- Float32 precision to reduce memory usage
-- Garbage collection between chunks
-- Optional HDBSCAN for better scalability
-
 ## 📊 Results
 
 Results are saved in the `Codes_Results/` directory:
@@ -133,17 +125,10 @@ Results are saved in the `Codes_Results/` directory:
 - Evaluation metric visualizations (PNG files)
 - 3D scatter plot visualizations
 
-## 🤝 Contributing
-
-This is an internship project. For questions or contributions, please refer to the documentation links above.
-
-## 📄 License
-
-This project is part of an IIT internship program.
 
 ## 👤 Author
 
-IIT Internship Project - Hand Gesture Recognition using Unsupervised Learning
+Adit Jain (IIT Internship Project - Imitation learning of robot manipulator by human demostrations)
 
 ---
 
