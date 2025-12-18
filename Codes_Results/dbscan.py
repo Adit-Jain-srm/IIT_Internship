@@ -152,8 +152,8 @@ def main():
     dataset.to_csv(output_csv, index=False)
     print(f"Clustered dataset saved as: {output_csv}")
     
-    # Visualization (sample for visualization, but clustering is on full dataset)
-    visualize_clusters(coordinates, labels, num_clusters, noise_count)
+    # Visualization (use scaled coordinates to match the clustering space)
+    visualize_clusters(coordinates_scaled, labels, num_clusters, noise_count)
 
 
 def chunked_dbscan(coordinates, eps=0.5, min_samples=10, chunk_size=50000):
@@ -295,10 +295,10 @@ def visualize_clusters(coordinates, labels, num_clusters, noise_count):
                        coords_sample[mask, 2], c=[color_map[label]], 
                        label=f'Cluster {label}', alpha=0.6, s=2)
     
-    ax1.set_xlabel('X')
-    ax1.set_ylabel('Y')
-    ax1.set_zlabel('Z')
-    ax1.set_title(f'DBSCAN Clustering - 3D View\n({n_clusters_vis} clusters, {noise_count} noise points)')
+    ax1.set_xlabel('X (scaled)')
+    ax1.set_ylabel('Y (scaled)')
+    ax1.set_zlabel('Z (scaled)')
+    ax1.set_title(f'DBSCAN Clustering - 3D View (Scaled Space)\n({n_clusters_vis} clusters, {noise_count} noise points)')
     ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=8)
     
     # 2. XY Projection (2D)
@@ -312,9 +312,9 @@ def visualize_clusters(coordinates, labels, num_clusters, noise_count):
             ax2.scatter(coords_sample[mask, 0], coords_sample[mask, 1], 
                        c=[color_map[label]], label=f'Cluster {label}', alpha=0.6, s=2)
     
-    ax2.set_xlabel('X')
-    ax2.set_ylabel('Y')
-    ax2.set_title('XY Projection')
+    ax2.set_xlabel('X (scaled)')
+    ax2.set_ylabel('Y (scaled)')
+    ax2.set_title('XY Projection (Scaled Space)')
     ax2.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=8)
     ax2.grid(True, alpha=0.3)
     
@@ -329,9 +329,9 @@ def visualize_clusters(coordinates, labels, num_clusters, noise_count):
             ax3.scatter(coords_sample[mask, 0], coords_sample[mask, 2], 
                        c=[color_map[label]], label=f'Cluster {label}', alpha=0.6, s=2)
     
-    ax3.set_xlabel('X')
-    ax3.set_ylabel('Z')
-    ax3.set_title('XZ Projection')
+    ax3.set_xlabel('X (scaled)')
+    ax3.set_ylabel('Z (scaled)')
+    ax3.set_title('XZ Projection (Scaled Space)')
     ax3.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=8)
     ax3.grid(True, alpha=0.3)
     
