@@ -19,13 +19,6 @@ The project focuses on analyzing 3D hand pose data using unsupervised clustering
 ```
 IIT_Internship/
 ├── Codes_Results/          # Main code and results
-│   ├── K-means.py          # K-Means clustering implementation
-│   ├── dbscan.py           # DBSCAN clustering implementation
-│   ├── combined.csv        # Combined dataset (2M rows)
-│   ├── combined_dbscan_clustered.csv  # DBSCAN clustering results
-│   ├── Kmeans_score.png    # K-Means evaluation visualization
-│   ├── DBSCAN_Score.png     # DBSCAN evaluation visualization
-│   └── DBSCAN_clustering_visualization.png  # DBSCAN 3D visualization
 ├── input_gesture_1/        # Raw gesture data
 │   ├── Cleaning/           # Cleaning gesture samples
 │   ├── Come/               # Come gesture samples
