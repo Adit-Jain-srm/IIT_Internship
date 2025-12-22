@@ -1,0 +1,63 @@
+
+BALANCED DATASET VALIDATION REPORT
+Generated: 2025-12-20 17:16:01.528521
+================================================================================
+
+OBJECTIVE:
+Create perfectly balanced training dataset where:
+- Each temperature range has equal representation
+- Each reading (experiment) within each range has uniform dimensions
+- No single range or reading dominates the training set
+
+================================================================================
+
+OVERALL STATISTICS
+Total rows: 98,820
+Total columns: 10
+Memory usage: 22.90 MB
+
+TEMPERATURE RANGE DISTRIBUTION
+20-30°C: 16,470 rows (16.67%)
+30-40°C: 16,470 rows (16.67%)
+40-50°C: 16,470 rows (16.67%)
+50-60°C: 16,470 rows (16.67%)
+60-70°C: 16,470 rows (16.67%)
+70-85°C: 16,470 rows (16.67%)
+
+Expected per range: 16,470 rows
+All ranges equal: YES
+
+READING DISTRIBUTION (per temperature range)
+[OK] 20-30°C: All readings have 1647 rows
+[OK] 30-40°C: All readings have 1647 rows
+[OK] 40-50°C: All readings have 1647 rows
+[OK] 50-60°C: All readings have 1647 rows
+[OK] 60-70°C: All readings have 1647 rows
+[OK] 70-85°C: All readings have 1647 rows
+
+DATA QUALITY CHECKS
+Missing values: 0
+Duplicate rows: 0
+Data integrity verified: YES
+
+SENSOR VALUE RANGES
+sensor_1: [32.00, 296.00] (mean: 130.93)
+sensor_2: [201.00, 682.00] (mean: 416.77)
+sensor_3: [317.00, 1151.00] (mean: 675.63)
+sensor_4: [46.00, 615.00] (mean: 325.19)
+
+OUTPUT FILES GENERATED
+[OK] balanced_dataset_combined.csv - Flat table with all 98,820 rows
+[OK] balanced_readings/<temp_range>/*.csv - Individual reading files (10 per range)
+[OK] balanced_tensor_3d.npy - 3D NumPy array (6x10x1647x4)
+[OK] balanced_tensor_metadata.json - Metadata for tensor interpretation
+[OK] balance_validation_report.txt - This validation report
+
+CONCLUSION
+Dataset is PERFECTLY BALANCED:
+- All 6 temperature ranges: 16,470 rows each (16.67% each)
+- All 60 readings: 1647 rows each
+- Total training samples: 98,820
+- Data retention from original: 99.40%
+
+Ready for machine learning model training and evaluation.

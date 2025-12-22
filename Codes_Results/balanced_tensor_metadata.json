@@ -1,0 +1,19 @@
+{
+  "temp_ranges": {
+    "0": "20-30",
+    "1": "30-40",
+    "2": "40-50",
+    "3": "50-60",
+    "4": "60-70",
+    "5": "70-85"
+  },
+  "rows_per_file": 1647,
+  "files_per_range": 10,
+  "total_rows": 98820,
+  "sensor_columns": [
+    "sensor_1",
+    "sensor_2",
+    "sensor_3",
+    "sensor_4"
+  ]
+}
