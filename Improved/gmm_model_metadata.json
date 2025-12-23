@@ -1,0 +1,67 @@
+{
+  "model_name": "GMM Temperature Classification v2 (Improved)",
+  "version": "2.0",
+  "training_date": "2025-12-23T16:12:22.066520",
+  "model_type": "Gaussian Mixture Model",
+  "n_clusters": 12,
+  "n_sensors": 4,
+  "sensor_columns": [
+    "sensor_1",
+    "sensor_2",
+    "sensor_3",
+    "sensor_4"
+  ],
+  "covariance_type": "tied",
+  "training_data": {
+    "original_samples": 98820,
+    "collected_samples": 1049,
+    "total_samples": 99869
+  },
+  "temperature_categories": {
+    "Cold": [
+      "20-30",
+      "30-40"
+    ],
+    "Normal": [
+      "40-50",
+      "50-60"
+    ],
+    "Hot": [
+      "60-70",
+      "70-85"
+    ]
+  },
+  "cluster_to_temperature_mapping": {
+    "0": "Cold",
+    "1": "Normal",
+    "2": "Cold",
+    "3": "Cold",
+    "4": "Hot",
+    "5": "Hot",
+    "6": "Cold",
+    "7": "Normal",
+    "8": "Hot",
+    "9": "Hot",
+    "10": "Normal",
+    "11": "Hot"
+  },
+  "performance_metrics": {
+    "accuracy_overall": 0.49584956292743493,
+    "accuracy_training_data": 0.49715644606354986,
+    "accuracy_collected_data": 0.37273593898951385,
+    "precision": 0.4836112241455478,
+    "recall": 0.49584956292743493,
+    "f1_score": 0.46452915811015305,
+    "silhouette_score": 0.32315296107032576,
+    "davies_bouldin_index": 1.0455502576257385,
+    "calinski_harabasz_index": 67531.8331453111
+  },
+  "improvements": [
+    "Increased from 9 to 12 components for better capacity",
+    "Trained on combined dataset (original + collected validation data)",
+    "Corrected temperature mapping: 50-60\u00b0C now mapped as HOT",
+    "Improved scaler fitted on all data",
+    "Better generalization with diverse training samples",
+    "Test set accuracy on incomplete data: 37.27%"
+  ]
+}

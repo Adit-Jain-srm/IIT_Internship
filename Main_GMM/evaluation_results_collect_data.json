@@ -1,0 +1,513 @@
+{
+  "overall_accuracy": 0.3142857142857143,
+  "total_samples": 35,
+  "detailed_results": [
+    {
+      "file": "display_log_20251220_144509.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999957616,
+      "correct": true,
+      "avg_sensors": [
+        145.3181818181818,
+        367.77272727272725,
+        370.90909090909093,
+        386.22727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_144825.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999936122,
+      "correct": true,
+      "avg_sensors": [
+        147.04545454545453,
+        369.40909090909093,
+        369.90909090909093,
+        386.22727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_145147.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999996163,
+      "correct": true,
+      "avg_sensors": [
+        147.27272727272728,
+        371.40909090909093,
+        375.59090909090907,
+        385.59090909090907
+      ]
+    },
+    {
+      "file": "display_log_20251220_145554.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999999822,
+      "correct": true,
+      "avg_sensors": [
+        149.1818181818182,
+        369.6818181818182,
+        382.54545454545456,
+        385.95454545454544
+      ]
+    },
+    {
+      "file": "display_log_20251220_145915.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 1.0,
+      "correct": true,
+      "avg_sensors": [
+        153.04545454545453,
+        375.95454545454544,
+        393.45454545454544,
+        389.54545454545456
+      ]
+    },
+    {
+      "file": "display_log_20251220_150247.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999999893,
+      "correct": true,
+      "avg_sensors": [
+        151.95454545454547,
+        372.3636363636364,
+        385.3636363636364,
+        389.72727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_150552.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999998508,
+      "correct": true,
+      "avg_sensors": [
+        150.5909090909091,
+        368.3181818181818,
+        377.59090909090907,
+        387.45454545454544
+      ]
+    },
+    {
+      "file": "display_log_20251220_150939.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.999999999999929,
+      "correct": true,
+      "avg_sensors": [
+        148.72727272727272,
+        368.1818181818182,
+        380.5,
+        388.40909090909093
+      ]
+    },
+    {
+      "file": "display_log_20251220_151247.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999998295,
+      "correct": true,
+      "avg_sensors": [
+        149.72727272727272,
+        364.6818181818182,
+        376.59090909090907,
+        386.77272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_151520.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9999999999998543,
+      "correct": true,
+      "avg_sensors": [
+        146.45454545454547,
+        369.77272727272725,
+        377.54545454545456,
+        385.27272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_161450.csv",
+      "temp_range": "15-25",
+      "ground_truth": "COLD",
+      "predicted": "COLD",
+      "confidence": 0.9994238836451688,
+      "correct": true,
+      "avg_sensors": [
+        110.22727272727273,
+        326.45454545454544,
+        394.0,
+        281.1363636363636
+      ]
+    },
+    {
+      "file": "display_log_20251220_112212.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999996746674,
+      "correct": false,
+      "avg_sensors": [
+        132.72727272727272,
+        381.90909090909093,
+        367.40909090909093,
+        383.77272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_112814.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999996876099,
+      "correct": false,
+      "avg_sensors": [
+        136.54545454545453,
+        375.0,
+        367.6818181818182,
+        388.09090909090907
+      ]
+    },
+    {
+      "file": "display_log_20251220_113719.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999952521961,
+      "correct": false,
+      "avg_sensors": [
+        136.72727272727272,
+        366.3181818181818,
+        354.3181818181818,
+        378.1363636363636
+      ]
+    },
+    {
+      "file": "display_log_20251220_114250.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999994041637,
+      "correct": false,
+      "avg_sensors": [
+        138.04545454545453,
+        372.6363636363636,
+        360.45454545454544,
+        380.3636363636364
+      ]
+    },
+    {
+      "file": "display_log_20251220_115009.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999689884,
+      "correct": false,
+      "avg_sensors": [
+        138.28571428571428,
+        378.57142857142856,
+        372.9047619047619,
+        389.04761904761904
+      ]
+    },
+    {
+      "file": "display_log_20251220_115456.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999271871,
+      "correct": false,
+      "avg_sensors": [
+        138.45454545454547,
+        375.40909090909093,
+        367.8181818181818,
+        384.95454545454544
+      ]
+    },
+    {
+      "file": "display_log_20251220_120535.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999950155,
+      "correct": false,
+      "avg_sensors": [
+        138.72727272727272,
+        377.5,
+        371.3636363636364,
+        381.77272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_121002.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999618652,
+      "correct": false,
+      "avg_sensors": [
+        135.63636363636363,
+        373.09090909090907,
+        369.59090909090907,
+        385.40909090909093
+      ]
+    },
+    {
+      "file": "display_log_20251220_121529.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999978009,
+      "correct": false,
+      "avg_sensors": [
+        136.0909090909091,
+        379.09090909090907,
+        377.45454545454544,
+        386.77272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_121851.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999980425,
+      "correct": false,
+      "avg_sensors": [
+        135.95454545454547,
+        375.6363636363636,
+        377.6363636363636,
+        387.72727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_122834.csv",
+      "temp_range": "45-50",
+      "ground_truth": "NORMAL",
+      "predicted": "COLD",
+      "confidence": 0.9999999999987175,
+      "correct": false,
+      "avg_sensors": [
+        134.5909090909091,
+        380.45454545454544,
+        381.8636363636364,
+        390.54545454545456
+      ]
+    },
+    {
+      "file": "display_log_20251220_120108.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999988809,
+      "correct": false,
+      "avg_sensors": [
+        136.13636363636363,
+        411.27272727272725,
+        404.90909090909093,
+        414.04545454545456
+      ]
+    },
+    {
+      "file": "display_log_20251220_122406.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999859952,
+      "correct": false,
+      "avg_sensors": [
+        133.5,
+        371.59090909090907,
+        370.54545454545456,
+        383.45454545454544
+      ]
+    },
+    {
+      "file": "display_log_20251220_134116.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999998925375,
+      "correct": false,
+      "avg_sensors": [
+        140.27272727272728,
+        363.09090909090907,
+        363.72727272727275,
+        384.1818181818182
+      ]
+    },
+    {
+      "file": "display_log_20251220_134526.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999885745,
+      "correct": false,
+      "avg_sensors": [
+        138.95454545454547,
+        366.1818181818182,
+        371.6818181818182,
+        388.09090909090907
+      ]
+    },
+    {
+      "file": "display_log_20251220_135253.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.99999999992108,
+      "correct": false,
+      "avg_sensors": [
+        140.04545454545453,
+        374.40909090909093,
+        369.22727272727275,
+        388.1818181818182
+      ]
+    },
+    {
+      "file": "display_log_20251220_135725.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999851248,
+      "correct": false,
+      "avg_sensors": [
+        140.85714285714286,
+        371.2857142857143,
+        366.42857142857144,
+        380.6190476190476
+      ]
+    },
+    {
+      "file": "display_log_20251220_140112.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999999396,
+      "correct": false,
+      "avg_sensors": [
+        140.22727272727272,
+        376.6363636363636,
+        381.95454545454544,
+        383.6363636363636
+      ]
+    },
+    {
+      "file": "display_log_20251220_140540.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999999822,
+      "correct": false,
+      "avg_sensors": [
+        144.0909090909091,
+        372.1363636363636,
+        385.3636363636364,
+        387.22727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_141015.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999993854,
+      "correct": false,
+      "avg_sensors": [
+        141.8181818181818,
+        381.95454545454544,
+        380.6818181818182,
+        389.1818181818182
+      ]
+    },
+    {
+      "file": "display_log_20251220_141503.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999931184,
+      "correct": false,
+      "avg_sensors": [
+        139.6818181818182,
+        375.45454545454544,
+        370.90909090909093,
+        383.22727272727275
+      ]
+    },
+    {
+      "file": "display_log_20251220_143409.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999661107,
+      "correct": false,
+      "avg_sensors": [
+        139.0909090909091,
+        368.22727272727275,
+        366.1363636363636,
+        382.77272727272725
+      ]
+    },
+    {
+      "file": "display_log_20251220_144118.csv",
+      "temp_range": "50-60",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999951932,
+      "correct": false,
+      "avg_sensors": [
+        142.0909090909091,
+        364.6818181818182,
+        372.6818181818182,
+        388.5
+      ]
+    },
+    {
+      "file": "display_log_20251220_141956.csv",
+      "temp_range": "60-70",
+      "ground_truth": "HOT",
+      "predicted": "COLD",
+      "confidence": 0.9999999999961275,
+      "correct": false,
+      "avg_sensors": [
+        138.8181818181818,
+        373.1818181818182,
+        375.09090909090907,
+        388.04545454545456
+      ]
+    }
+  ],
+  "confusion_matrix": [
+    [
+      11,
+      0,
+      0
+    ],
+    [
+      11,
+      0,
+      0
+    ],
+    [
+      13,
+      0,
+      0
+    ]
+  ]
+}
