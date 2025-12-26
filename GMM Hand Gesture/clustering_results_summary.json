@@ -1,0 +1,20 @@
+{
+  "gmm_metrics": {
+    "silhouette": 0.3915610673478395,
+    "davies_bouldin": 1.475234122563434,
+    "calinski_harabasz": 18503.85800767077
+  },
+  "gsc_metrics": {
+    "silhouette": 0.4158081228351013,
+    "davies_bouldin": 1.032621420806208,
+    "calinski_harabasz": 4197.323074348272
+  },
+  "n_samples": 10000,
+  "gsc_params": {
+    "n_clusters": 8,
+    "n_neighbors": 20,
+    "n_eigenvectors": 8,
+    "affinity": "rbf",
+    "gamma": 0.1
+  }
+}
