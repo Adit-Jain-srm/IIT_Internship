@@ -1,0 +1,26 @@
+[
+  {
+    "config": "Baseline (No Temporal Features)",
+    "accuracy": 0.40625,
+    "use_temporal_features": false,
+    "use_per_frame_spatial": false
+  },
+  {
+    "config": "Current (Temporal Features, Mean Frame Spatial)",
+    "accuracy": 0.3875,
+    "use_temporal_features": true,
+    "use_per_frame_spatial": false
+  },
+  {
+    "config": "Balanced Weights (50% Static, 50% Temporal)",
+    "accuracy": 0.4375,
+    "use_temporal_features": true,
+    "use_per_frame_spatial": false
+  },
+  {
+    "config": "Per-Frame Spatial + Temporal Features",
+    "accuracy": 0.3875,
+    "use_temporal_features": true,
+    "use_per_frame_spatial": true
+  }
+]
