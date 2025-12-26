@@ -1,0 +1,5 @@
+{
+  "landmarks_per_frame": 42,
+  "features_per_frame": 126,
+  "n_frames": 12000
+}

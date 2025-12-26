@@ -1,0 +1,28 @@
+{
+  "method": "DTW-GC (Dynamic Time Warping Graph Clustering)",
+  "n_clusters": 8,
+  "n_sequences": 98,
+  "dtw_window": 15,
+  "graph_method": "spectral",
+  "k_neighbors": 15,
+  "train_metrics": {
+    "silhouette": 0.03718855698595603,
+    "davies_bouldin": 3.221363263844746,
+    "calinski_harabasz": 730.0664476110398
+  },
+  "cluster_distribution": {
+    "0": 1257,
+    "1": 567,
+    "2": 920,
+    "3": 2948,
+    "4": 1168,
+    "5": 268,
+    "6": 3111,
+    "7": 159
+  },
+  "sequence_lengths": {
+    "min": 5,
+    "max": 2948,
+    "mean": 106.10204081632654
+  }
+}

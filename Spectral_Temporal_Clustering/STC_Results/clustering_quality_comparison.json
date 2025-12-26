@@ -1,0 +1,17 @@
+{
+  "stc": {
+    "silhouette": 0.7037023595088217,
+    "davies_bouldin": 0.5763388239026997,
+    "calinski_harabasz": 3517.8171657203116
+  },
+  "gmm": {
+    "silhouette": 0.533476965108739,
+    "davies_bouldin": 0.9114025176538391,
+    "calinski_harabasz": 3453.0142650852417
+  },
+  "improvement": {
+    "silhouette_pct": 31.908668140035907,
+    "davies_bouldin_pct": 36.76352514514342,
+    "calinski_harabasz_pct": 1.876705268504591
+  }
+}
