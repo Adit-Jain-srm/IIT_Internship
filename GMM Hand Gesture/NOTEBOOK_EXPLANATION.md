@@ -490,6 +490,7 @@ def eps_candidates_from_kdist(k_dist, percentiles=[85,88,90,92,94,96,98], expand
 
 **Purpose**: Automatically generates eps candidates for grid search
 
+
 **Logic**:
 1. Computes percentiles of k-distance (e.g., 85th, 88th, 90th percentile)
 2. Creates small band around each percentile
