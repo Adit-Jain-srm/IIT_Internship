@@ -1,8 +1,8 @@
 {
   "stc": {
-    "silhouette": 0.7037023595088217,
-    "davies_bouldin": 0.5763388239026997,
-    "calinski_harabasz": 3517.8171657203116
+    "silhouette": 0.6633638217690194,
+    "davies_bouldin": 0.4263133969127383,
+    "calinski_harabasz": 3666.3846903644635
   },
   "gmm": {
     "silhouette": 0.533476965108739,
@@ -10,8 +10,8 @@
     "calinski_harabasz": 3453.0142650852417
   },
   "improvement": {
-    "silhouette_pct": 31.908668140035907,
-    "davies_bouldin_pct": 36.76352514514342,
-    "calinski_harabasz_pct": 1.876705268504591
+    "silhouette_pct": 24.347228681899228,
+    "davies_bouldin_pct": 53.22446573768881,
+    "calinski_harabasz_pct": 6.179251196170615
   }
 }
