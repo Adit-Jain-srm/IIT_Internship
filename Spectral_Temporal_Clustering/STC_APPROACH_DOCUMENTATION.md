@@ -25,7 +25,7 @@
 - **Spatial structure**: Hand skeleton topology (42 landmarks per frame)
 - **Temporal dynamics**: Gesture sequences (150 frames per video)
 
-**Key Achievement**: 45.625% accuracy (vs 43.75% for GMM baseline) with superior clustering quality metrics.
+**Key Achievement**: 45.625% accuracy (vs 43.75% for GMM baseline) with superior clustering quality metrics - STC Silhouette Score: 0.6634 (vs GMM: 0.5335) 
 
 **Core Innovation**: Joint spectral embedding of spatial and temporal graphs enables discovery of gesture clusters that respect both hand pose similarity and motion patterns.
 
