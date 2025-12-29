@@ -4,22 +4,24 @@
 
 This document compares Gaussian Mixture Models (GMM) with recent soft clustering innovations, including Deep Embedded Clustering (DEC) variants, constraint-based methods, and enhanced traditional approaches. GMM remains valuable for interpretable, medium-scale clustering, while deep learning methods excel at high-dimensional, large-scale problems.
 
+**Year & Inclusion Note**: Some core methods (GMM, FCM, Bayesian/Dirichlet GMM, DEC) were introduced **before 2020** and are included here as **baselines for comparison, learning, and reference** against recent (2020–2025) soft clustering approaches.
+
 ---
 
 ## Algorithm Classification Summary
 
 **All algorithms perform SOFT CLUSTERING**
 
-| Algorithm | Learning Type | Soft Clustering |
-|-----------|---------------|-----------------|
-| **GMM** | Unsupervised | ✅ Yes |
-| **FCM** | Unsupervised | ✅ Yes |
-| **Bayesian/Dirichlet GMM** | Unsupervised | ✅ Yes |
-| **DEC/Variants** | Unsupervised | ✅ Yes |
-| **SC-DEC** | Semi-Supervised | ✅ Yes |
-| **ESM** | Unsupervised | ✅ Yes |
-| **ABC for GMM** | Unsupervised | ✅ Yes |
-| **Deep Conditional GMM** | Semi-Supervised* | ✅ Yes |
+| Algorithm | Year (Intro) | Role | Learning Type | Soft Clustering |
+|-----------|--------------|------|---------------|-----------------|
+| **GMM** | 1960s–1970s | Baseline / Reference | Unsupervised | ✅ Yes |
+| **FCM** | 1981 | Baseline / Reference | Unsupervised | ✅ Yes |
+| **Bayesian/Dirichlet GMM** | ~2000 | Baseline / Reference | Unsupervised | ✅ Yes |
+| **DEC/Variants** | 2016+ | Baseline / Recent | Unsupervised | ✅ Yes |
+| **SC-DEC** | 2023 | Recent | Semi-Supervised | ✅ Yes |
+| **ESM** | 2020 | Recent | Unsupervised | ✅ Yes |
+| **ABC for GMM** | 2023 | Recent | Unsupervised | ✅ Yes |
+| **Deep Conditional GMM** | 2023–2024 | Recent | Semi-Supervised* | ✅ Yes |
 
 *Can be used unsupervised or with constraints
 
