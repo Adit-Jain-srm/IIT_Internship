@@ -79,7 +79,7 @@ GMM is a probabilistic model assuming data is generated from a mixture of Gaussi
 
 ### 3.1 Deep Embedded Clustering (DEC) and Variants
 
-**Overview**: DEC (introduced 2015, advanced post-2020) combines autoencoders with clustering objectives, learning dimensionality reduction and clustering simultaneously.
+**Overview**: DEC (introduced 2016, advanced post-2020) combines autoencoders with clustering objectives, learning dimensionality reduction and clustering simultaneously.
 
 **Advantages**:
 - **Automatic Feature Learning**: Discovers optimal representations without supervision
