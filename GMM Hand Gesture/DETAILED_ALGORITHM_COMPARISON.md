@@ -2,7 +2,7 @@
 
 ## Executive Comparison Table
 
-| Dimension | Current K-Means/GMM | Graph-Based (GCN) | Temporal Graph (T-GCN) | Transformer GNN |
+| Dimension | Current K-Means/GMM | Graph-Based (GCN) | Temporal Graph (T-GCN) | Transformer GNN |mstcn
 |-----------|-------------------|-------------------|----------------------|-----------------|
 | **Core Concept** | Position clustering | Structure-aware embedding | Structure + temporal flow | Attention over structure + time |
 | **Hand Anatomy** | ❌ Ignored | ✓ Respected | ✓ Respected | ✓ Respected |

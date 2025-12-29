@@ -37,11 +37,9 @@ STC combines two graph structures:
 
 1. **Spatial Graph**: k-NN graph of hand landmarks within each frame
    - Captures hand structure and spatial relationships
-   - Built using mean frame representation per sequence
 
 2. **Temporal Graph**: Similarity graph between gesture sequences
    - Captures temporal patterns and sequence similarity
-   - Uses mean sequence representation for efficiency
 
 3. **Joint Laplacian**: `L_joint = α·L_spatial + (1-α)·L_temporal`
    - α controls balance between spatial and temporal information
