@@ -4,6 +4,25 @@
 
 This document compares Gaussian Mixture Models (GMM) with recent soft clustering innovations, including Deep Embedded Clustering (DEC) variants, constraint-based methods, and enhanced traditional approaches. GMM remains valuable for interpretable, medium-scale clustering, while deep learning methods excel at high-dimensional, large-scale problems.
 
+**Note on Algorithm Classification**: All algorithms discussed perform **soft clustering** (providing membership probabilities rather than hard assignments). However, while most are **unsupervised** (GMM, DEC, ESM, ABC for GMM), **SC-DEC** and **Deep Conditional GMM** are **semi-supervised** methods that incorporate constraints or partial labels.
+
+---
+
+## Algorithm Classification Summary
+
+**All algorithms perform SOFT CLUSTERING** (membership probabilities, not hard assignments):
+
+| Algorithm | Learning Type | Soft Clustering |
+|-----------|---------------|-----------------|
+| **GMM** | Unsupervised | ✅ Yes |
+| **DEC/Variants** | Unsupervised | ✅ Yes |
+| **SC-DEC** | Semi-Supervised | ✅ Yes |
+| **ESM** | Unsupervised | ✅ Yes |
+| **ABC for GMM** | Unsupervised | ✅ Yes |
+| **Deep Conditional GMM** | Semi-Supervised* | ✅ Yes |
+
+*Can be used unsupervised or with constraints
+
 ---
 
 ## 1. Gaussian Mixture Models (GMM)
@@ -55,7 +74,7 @@ GMM is a probabilistic model assuming data is generated from a mixture of Gaussi
 
 ### 2.2 Soft Constrained Deep Clustering (SC-DEC, 2023)
 
-**Overview**: Integrates external knowledge through soft pairwise constraints (should-link, must-link) while leveraging deep learning for feature discovery.
+**Overview**: Integrates external knowledge through soft pairwise constraints (should-link, must-link) while leveraging deep learning for feature discovery. **Note**: This is a **semi-supervised** method (not purely unsupervised) as it uses constraint information.
 
 **Advantages**:
 - **Knowledge Integration**: Incorporates domain expertise as soft constraints
@@ -82,6 +101,7 @@ GMM is a probabilistic model assuming data is generated from a mixture of Gaussi
 **Deep Conditional GMM (2023-2024)**: Hybrid approach combining GMM interpretability with deep learning
 - **Pros**: Maintains probabilistic interpretation, robust to noisy constraints
 - **Cons**: More complex than standard GMM, still emerging
+- **Note**: Can be used in semi-supervised settings when constraints are available
 
 ---
 
@@ -89,6 +109,8 @@ GMM is a probabilistic model assuming data is generated from a mixture of Gaussi
 
 | Aspect | GMM | DEC/Variants | SC-DEC | ESM |
 |--------|-----|--------------|--------|-----|
+| **Learning Type** | Unsupervised | Unsupervised | Semi-Supervised | Unsupervised |
+| **Soft Clustering** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Feature Learning** | Manual/Static | Automatic | Automatic | Manual Selection |
 | **Speed** | ⭐⭐⭐⭐ Fast | ⭐⭐ Slower | ⭐⭐ Slower | ⭐⭐⭐ Medium |
 | **High-Dim Performance** | Poor | Excellent | Excellent | Moderate |
