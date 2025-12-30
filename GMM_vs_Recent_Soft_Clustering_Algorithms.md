@@ -14,20 +14,20 @@ This document compares Gaussian Mixture Models (GMM) with recent soft clustering
 
 | Algorithm | Year | Category | Learning Type | Auto K | Streaming | Tabular Data |
 |-----------|------|----------|---------------|--------|-----------|--------------|
-| **GMM** | 1960s-1970s | Probabilistic | Unsupervised | ❌ No* | ❌ No | ✅ Yes |
-| **FCM** | 1981 | Centroid-based | Unsupervised | ❌ No* | ❌ No | ✅ Yes |
-| **Bayesian/Dirichlet GMM** | ~2000 | Probabilistic | Unsupervised | ✅ Yes | ❌ No | ✅ Yes |
-| **DEC/Variants** | 2016+ | Deep Learning | Unsupervised | ❌ No | ❌ No | ⚠️ Limited |
-| **SC-DEC** | 2023 | Deep Learning | Semi-Supervised | ❌ No | ❌ No | ⚠️ Limited |
-| **ESM** | 2020 | Probabilistic | Unsupervised | ❌ No | ❌ No | ✅ Yes |
-| **DPMM** | 2025 | Probabilistic | Unsupervised | ✅ Yes | ⚠️ Variants | ✅ Yes |
-| **Weighted GMM Deep Clustering** | 2025 | Hybrid | Unsupervised | ❌ No | ❌ No | ✅ Yes |
-| **DEABC-FC** | 2025 | Metaheuristic | Unsupervised | ❌ No | ❌ No | ✅ Yes |
-| **K-Prototypes (Fuzzy)** | 2025 | Hybrid | Unsupervised | ❌ No | ❌ No | ✅ Yes |
-| **MAC** | 2024 | Centroid-based | Unsupervised | ❌ No | ❌ No | ✅ Yes |
-| **sERAL** | 2025 | Evolving | Unsupervised | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Variational DPMM (Forgetting)** | 2025 | Probabilistic | Unsupervised | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Unsupervised Fuzzy Decision Trees** | 2024 | Interpretable | Unsupervised | ❌ No | ❌ No | ✅ Yes |
+| **GMM** | 1960s-1970s | Probabilistic | Unsupervised | No* | No | Yes |
+| **FCM** | 1981 | Centroid-based | Unsupervised | No* | No | Yes |
+| **Bayesian/Dirichlet GMM** | ~2000 | Probabilistic | Unsupervised | Yes | No | Yes |
+| **DEC/Variants** | 2016+ | Deep Learning | Unsupervised | No | No | Limited |
+| **SC-DEC** | 2023 | Deep Learning | Semi-Supervised | No | No | Limited |
+| **ESM** | 2020 | Probabilistic | Unsupervised | No | No | Yes |
+| **DPMM** | 2025 | Probabilistic | Unsupervised | Yes | Variants | Yes |
+| **Weighted GMM Deep Clustering** | 2025 | Hybrid | Unsupervised | No | No | Yes |
+| **DEABC-FC** | 2025 | Metaheuristic | Unsupervised | No | No | Yes |
+| **K-Prototypes (Fuzzy)** | 2025 | Hybrid | Unsupervised | No | No | Yes |
+| **MAC** | 2024 | Centroid-based | Unsupervised | No | No | Yes |
+| **sERAL** | 2025 | Evolving | Unsupervised | Yes | Yes | Yes |
+| **Variational DPMM (Forgetting)** | 2025 | Probabilistic | Unsupervised | Yes | Yes | Yes |
+| **Unsupervised Fuzzy Decision Trees** | 2024 | Interpretable | Unsupervised | No | No | Yes |
 
 *GMM with BIC (2024-2025) can auto-select K; some FCM variants can auto-select clusters
 
@@ -277,14 +277,14 @@ This document compares Gaussian Mixture Models (GMM) with recent soft clustering
 | Aspect | GMM | FCM | DPMM | DEABC-FC | MAC | sERAL | Weighted GMM Deep | Fuzzy Decision Trees |
 |--------|-----|-----|------|----------|-----|-------|------------------|---------------------|
 | **Learning Type** | Unsupervised | Unsupervised | Unsupervised | Unsupervised | Unsupervised | Unsupervised | Unsupervised | Unsupervised |
-| **Soft Clustering** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Auto Cluster Count** | ⚠️ BIC* | ❌ No | ✅ Yes | ❌ No | ❌ No | ✅ Yes | ❌ No | ❌ No |
-| **Streaming Support** | ❌ No | ❌ No | ⚠️ Variants | ❌ No | ❌ No | ✅ Yes | ❌ No | ❌ No |
-| **Tabular Data** | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Excellent | ✅ Excellent |
-| **Mixed Data Types** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ✅ Yes** |
-| **Speed** | ⭐⭐⭐⭐ Fast | ⭐⭐⭐ Medium | ⭐⭐⭐ Medium | ⭐⭐ Slower | ⭐⭐⭐ Fast | ⭐⭐⭐ Medium | ⭐⭐ Slower | ⭐⭐⭐ Medium |
+| **Soft Clustering** | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes |
+| **Auto Cluster Count** | BIC* | No | Yes | No | No | Yes | No | No |
+| **Streaming Support** | No | No | Variants | No | No | Yes | No | No |
+| **Tabular Data** | Excellent | Excellent | Excellent | Excellent | Excellent | Excellent | Excellent | Excellent |
+| **Mixed Data Types** | No | No | No | No | No | No | No | Yes** |
+| **Speed** | Very Fast | Medium | Medium | Slower | Fast | Medium | Slower | Medium |
 | **High-Dim Performance** | Poor | Poor | Poor | Poor | Moderate | Moderate | Good | Moderate |
-| **Interpretability** | ⭐⭐⭐⭐ High | ⭐⭐⭐ Medium | ⭐⭐⭐⭐ High | ⭐⭐⭐ Medium | ⭐⭐⭐ Medium | ⭐⭐ Low | ⭐⭐⭐ Medium | ⭐⭐⭐⭐⭐ Very High |
+| **Interpretability** | High | Medium | High | Medium | Medium | Low | Medium | Very High |
 | **Noise Robustness** | Medium | Medium | High | High | High | High | Medium | Medium |
 | **GPU Required** | No | No | No | No | No | No | Yes | No |
 | **Implementation** | Simple | Simple | Moderate | Complex | Moderate | Complex | Complex | Moderate |
@@ -297,62 +297,62 @@ This document compares Gaussian Mixture Models (GMM) with recent soft clustering
 ## 7. Use-Case Recommendations
 
 ### Use GMM When:
-- ✅ Medium-scale tabular data (1K-100K samples)
-- ✅ Computational resources limited (no GPU)
-- ✅ Interpretability critical
-- ✅ Stable, reproducible results needed
-- ✅ Rapid prototyping required
-- ✅ Cluster shapes roughly Gaussian/ellipsoidal
+- Medium-scale tabular data (1K-100K samples)
+- Computational resources limited (no GPU)
+- Interpretability critical
+- Stable, reproducible results needed
+- Rapid prototyping required
+- Cluster shapes roughly Gaussian/ellipsoidal
 
 ### Use DPMM When:
-- ✅ Number of clusters unknown a priori
-- ✅ Uncertainty quantification critical
-- ✅ Time-series/financial tabular data
-- ✅ Want to incorporate domain knowledge as priors
-- ✅ Streaming data (with appropriate variants)
+- Number of clusters unknown a priori
+- Uncertainty quantification critical
+- Time-series/financial tabular data
+- Want to incorporate domain knowledge as priors
+- Streaming data (with appropriate variants)
 
 ### Use DEABC-FC When:
-- ✅ Noisy tabular data
-- ✅ FCM performance insufficient
-- ✅ Need robust convergence
-- ✅ Can tolerate increased computational cost
+- Noisy tabular data
+- FCM performance insufficient
+- Need robust convergence
+- Can tolerate increased computational cost
 
 ### Use K-Prototypes (Fuzzy) When:
-- ✅ Mixed numerical and categorical attributes
-- ✅ User profiling or mixed-attribute datasets
-- ✅ Need fuzzy uncertainty handling
+- Mixed numerical and categorical attributes
+- User profiling or mixed-attribute datasets
+- Need fuzzy uncertainty handling
 
 ### Use MAC When:
-- ✅ Medium-scale tabular data
-- ✅ Need fast, stable convergence
-- ✅ Standard distance metrics underperform
+- Medium-scale tabular data
+- Need fast, stable convergence
+- Standard distance metrics underperform
 
 ### Use sERAL When:
-- ✅ Real-time data streams
-- ✅ Unknown cluster count
-- ✅ Non-stationary tabular data
-- ✅ Sensor/financial tick data
+- Real-time data streams
+- Unknown cluster count
+- Non-stationary tabular data
+- Sensor/financial tick data
 
 ### Use Variational DPMM (Forgetting) When:
-- ✅ Non-stationary data streams
-- ✅ Concept drift expected
-- ✅ Need probabilistic framework with streaming
+- Non-stationary data streams
+- Concept drift expected
+- Need probabilistic framework with streaming
 
 ### Use Unsupervised Fuzzy Decision Trees When:
-- ✅ Tabular data requiring high explainability
-- ✅ Regulatory/compliance scenarios
-- ✅ Need decision rules for cluster assignment
+- Tabular data requiring high explainability
+- Regulatory/compliance scenarios
+- Need decision rules for cluster assignment
 
 ### Use Weighted GMM Deep Clustering When:
-- ✅ Domain adaptation scenarios
-- ✅ Distribution shifts between datasets
-- ✅ Need both interpretability and feature learning
+- Domain adaptation scenarios
+- Distribution shifts between datasets
+- Need both interpretability and feature learning
 
 ### Use DEC/Variants When:
-- ✅ High-dimensional data (1000+ features)
-- ✅ Complex, non-Gaussian cluster shapes
-- ✅ Large-scale datasets (millions) with GPU
-- ✅ Images, text, sequences (not primarily tabular)
+- High-dimensional data (1000+ features)
+- Complex, non-Gaussian cluster shapes
+- Large-scale datasets (millions) with GPU
+- Images, text, sequences (not primarily tabular)
 
 ---
 
