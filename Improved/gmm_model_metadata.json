@@ -1,6 +1,6 @@
 {
   "model_name": "GMM Temperature Classification",
-  "training_date": "2025-12-29T16:38:25.008139",
+  "training_date": "2025-12-29T17:55:12.382356",
   "n_clusters": 9,
   "n_sensors": 4,
   "sensor_columns": [
