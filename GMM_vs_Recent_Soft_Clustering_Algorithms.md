@@ -472,89 +472,125 @@ This section provides detailed implementation steps, mathematical formulations, 
 
 **Step 1: Data Preparation for X, Y, Z Coordinates**
 
-For gesture classification with x, y, z data:
-- **Input Format**: Each gesture frame is represented as a feature vector. For 21 hand landmarks:
-  - Raw format: `[x₁, y₁, z₁, x₂, y₂, z₂, ..., x₂₁, y₂₁, z₂₁]` → 63-dimensional vector
-  - Alternative: Temporal features (velocity, acceleration) can be computed from sequences
-- **Data Matrix**: `X ∈ ℝ^(N×D)` where N = number of samples, D = feature dimensions (63 for raw coordinates)
+For gesture classification with x, y, z data (as implemented in the notebook):
+- **Input Format**: Load gesture data from `combined.csv` file containing X, Y, Z coordinates
+- **Data Structure**: Each gesture frame is represented as a feature vector. For double-hand gestures with 42 landmarks (21 landmarks × 2 hands):
+  - Raw format: `[x₁, y₁, z₁, x₂, y₂, z₂, ..., x₄₂, y₄₂, z₄₂]` → 126-dimensional vector
+  - Each frame contains 42 landmarks × 3 coordinates = 126 features
+- **Data Matrix**: `X ∈ ℝ^(N×D)` where N = number of samples (frames), D = 126 feature dimensions (42 landmarks × 3 coordinates)
 
 **Step 2: Feature Standardization**
 
+As implemented in the notebook using `sklearn.preprocessing.StandardScaler`:
+
 ```python
-# Standardize features to zero mean and unit variance
-X_scaled = (X - μ) / σ
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
 ```
 
-This ensures all coordinate dimensions contribute equally to distance calculations.
+This standardizes features to zero mean and unit variance, ensuring all coordinate dimensions contribute equally to distance calculations. The StandardScaler applies: `X_scaled = (X - μ) / σ` where μ and σ are computed per feature dimension.
 
-**Step 3: Initialization**
+**Step 3: Train-Test Split**
 
-- **Number of Components (K)**: Set based on number of gesture classes (e.g., K=8 for 8 gestures)
-- **Initial Parameters**:
-  - Means `μₖ ∈ ℝ^D`: Initialize using K-Means++ or random selection
-  - Covariance matrices `Σₖ ∈ ℝ^(D×D)`: Initialize as identity matrices scaled by data variance
-  - Mixing coefficients `πₖ`: Initialize uniformly as `πₖ = 1/K` (sum to 1)
+As implemented in the notebook:
 
-**Step 4: Expectation-Maximization (EM) Algorithm**
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+```
+
+Split data into training (80%) and testing (20%) sets with fixed random state for reproducibility.
+
+**Step 4: Model Initialization and Training**
+
+As implemented in the notebook:
+
+```python
+from sklearn.mixture import GaussianMixture
+gmm = GaussianMixture(n_components=8, random_state=42)
+gmm.fit(X_train_scaled)
+```
+
+- **Number of Components (K)**: Set to 8 for 8 gesture classes (Cleaning, Come, Emergency Calling, Give, Good, Pick, Stack, Wave)
+- **Initial Parameters** (handled internally by sklearn):
+  - Means `μₖ ∈ ℝ^D` where D=126: Initialize using K-Means++ or random selection (default)
+  - Covariance matrices `Σₖ ∈ ℝ^(126×126)`: Initialize as identity matrices scaled by data variance
+  - Mixing coefficients `πₖ`: Initialize uniformly as `πₖ = 1/8` (sum to 1)
+
+**Step 5: Expectation-Maximization (EM) Algorithm**
+
+The `fit()` method internally executes the EM algorithm. Here are the mathematical steps:
 
 **E-Step (Expectation)**: Compute responsibility (soft assignment probability)
 
-For each data point `xₙ` (a 63-dimensional gesture feature vector) and each component k:
+For each data point `xₙ` (a 126-dimensional gesture feature vector) and each component k:
 
-\[
+
+$$
 \gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j)}
-\]
-
+$$
 where the multivariate Gaussian probability density function is:
 
-\[
-\mathcal{N}(x_n \mid \mu_k, \Sigma_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}(x_n - \mu_k)^T \Sigma_k^{-1} (x_n - \mu_k)\right)
-\]
 
+$$
+\mathcal{N}(x_n \mid \mu_k, \Sigma_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}(x_n - \mu_k)^T \Sigma_k^{-1} (x_n - \mu_k)\right)
+$$
 **Interpretation for X, Y, Z Data**:
 - `γₙₖ` represents the probability that gesture frame `xₙ` belongs to gesture class k
 - The Gaussian `𝒩(xₙ | μₖ, Σₖ)` measures how well the x, y, z coordinates match the learned distribution for gesture k
-- For 63-dimensional vectors, this captures spatial relationships across all 21 landmarks
+- For 126-dimensional vectors, this captures spatial relationships across all 42 landmarks (21 per hand)
 
 **M-Step (Maximization)**: Update parameters using weighted statistics
 
 **Updated Means** (cluster centers in feature space):
 
-\[
-\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{N_k}
-\]
 
+$$
+\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{N_k}
+$$
 where `Nₖ = Σₙ γₙₖ` is the effective number of points assigned to component k.
 
 **Updated Covariance Matrices** (capture shape and orientation of gesture clusters):
 
-\[
-\Sigma_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\text{new}})(x_n - \mu_k^{\text{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
-\]
 
+$$
+\Sigma_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\text{new}})(x_n - \mu_k^{\text{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
+$$
 **Interpretation for X, Y, Z Data**:
-- `Σₖ` is a 63×63 matrix capturing correlations between all coordinate pairs
-- Diagonal elements: variance of each x, y, z coordinate dimension
-- Off-diagonal elements: correlations between different landmark coordinates (e.g., how thumb x-coordinate relates to index finger y-coordinate)
+- `Σₖ` is a 126×126 matrix capturing correlations between all coordinate pairs
+- Diagonal elements: variance of each x, y, z coordinate dimension across all 42 landmarks
+- Off-diagonal elements: correlations between different landmark coordinates (e.g., how left thumb x-coordinate relates to right index finger y-coordinate, or spatial relationships within and between hands)
 
 **Updated Mixing Coefficients** (prior probabilities of each gesture):
 
-\[
+
+$$
 \pi_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk}}{N} = \frac{N_k}{N}
-\]
+$$
+**Step 6: Convergence Check**
 
-**Step 5: Convergence Check**
-
-Repeat E-Step and M-Step until:
+The EM algorithm repeats E-Step and M-Step until:
 - Log-likelihood change: `|log L(θ^(t+1)) - log L(θ^(t))| < ε` (typically ε = 1e-6)
-- Maximum iterations reached (typically 200-500)
+- Maximum iterations reached (default max_iter=100 in sklearn, can be increased)
+- Convergence status is available via `gmm.converged_` attribute
 
-**Step 6: Gesture Classification**
+**Step 7: Gesture Classification**
 
-For a new gesture frame `x_new`:
-1. Compute responsibilities: `γ_new,k` for all k components
-2. Hard assignment: `gesture_class = argmaxₖ γ_new,k`
-3. Soft assignment: Return probability vector `[γ_new,₁, γ_new,₂, ..., γ_new,ₖ]`
+As implemented in the notebook for evaluation:
+
+```python
+# Predict cluster assignments (hard classification)
+clusters = gmm.predict(X_test_scaled)
+
+# Get soft assignment probabilities
+probabilities = gmm.predict_proba(X_test_scaled)
+```
+
+For a new gesture frame `x_new` (126-dimensional):
+1. Compute responsibilities: `γ_new,k` for all k=8 components using `predict_proba()`
+2. Hard assignment: `gesture_class = argmaxₖ γ_new,k` (via `predict()`)
+3. Soft assignment: Return probability vector `[γ_new,₁, γ_new,₂, ..., γ_new,₈]` (via `predict_proba()`)
 
 ---
 
@@ -566,7 +602,7 @@ For a new gesture frame `x_new`:
 
 **Step 1: Data Preparation**
 
-Same as GMM: `X ∈ ℝ^(N×D)` where D = 63 for raw x, y, z coordinates.
+Same as GMM: `X ∈ ℝ^(N×D)` where D = 126 for raw x, y, z coordinates (42 landmarks × 3 coordinates).
 
 **Step 2: Feature Relevance Initialization**
 
@@ -578,16 +614,16 @@ Initialize feature relevance weights `wₖ ∈ ℝ^D` for each component k:
 
 Compute responsibilities using feature-weighted distances:
 
-\[
-\gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j, w_j)}
-\]
 
+$$
+\gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j, w_j)}
+$$
 where the feature-weighted Gaussian is:
 
-\[
-\mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}\sum_{j=1}^{D} w_{kj} \frac{(x_{nj} - \mu_{kj})^2}{\sigma_{kj}^2}\right)
-\]
 
+$$
+\mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}\sum_{j=1}^{D} w_{kj} \frac{(x_{nj} - \mu_{kj})^2}{\sigma_{kj}^2}\right)
+$$
 **Key Innovation**: The weights `wₖⱼ` downweight irrelevant features. For gesture classification:
 - If `wₖⱼ ≈ 0`: Feature j (e.g., z-coordinate of pinky) is irrelevant for gesture k
 - If `wₖⱼ ≈ 1`: Feature j (e.g., x-coordinate of thumb) is highly relevant for gesture k
@@ -596,26 +632,23 @@ where the feature-weighted Gaussian is:
 
 **Update Feature Weights** (novel contribution of ESM):
 
-\[
+$$
 w_{kj}^{\text{new}} = \frac{\exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nj} - \mu_{kj})^2 / \sigma_{kj}^2)}{\sum_{d=1}^{D} \exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nd} - \mu_{kd})^2 / \sigma_{kd}^2)}
-\]
+$$
 
 where `β` is a temperature parameter controlling feature selection strength.
 
 **Update Means and Covariances** (same as GMM, but using weighted features):
 
-\[
+
+$$
 \mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}}
-\]
-
-\[
 \Sigma_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\text{new}})(x_n - \mu_k^{\text{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
-\]
-
+$$
 **Application to X, Y, Z Gesture Data**:
-- ESM automatically identifies which landmarks are most discriminative for each gesture
-- Example: For "wave" gesture, ESM might learn that `w_wave,thumb_x ≈ 0.9` and `w_wave,pinky_z ≈ 0.1`, indicating thumb x-coordinate is critical while pinky z-coordinate is less important
-- This reduces the effective dimensionality from 63 to a smaller set of relevant features per gesture
+- ESM automatically identifies which landmarks (from 42 landmarks) are most discriminative for each gesture
+- Example: For "wave" gesture, ESM might learn that `w_wave,left_thumb_x ≈ 0.9` and `w_wave,right_pinky_z ≈ 0.1`, indicating left thumb x-coordinate is critical while right pinky z-coordinate is less important
+- This reduces the effective dimensionality from 126 to a smaller set of relevant features per gesture
 
 ---
 
@@ -627,7 +660,7 @@ where `β` is a temperature parameter controlling feature selection strength.
 
 **Step 1: Data Preparation**
 
-- **Input**: `X ∈ ℝ^(N×D)` where D = 63 for raw x, y, z coordinates
+- **Input**: `X ∈ ℝ^(N×D)` where D = 126 for raw x, y, z coordinates (42 landmarks × 3 coordinates)
 - **Constraints**: Define pairwise constraints:
   - Must-link: `(xᵢ, xⱼ) ∈ M` if gestures i and j are known to be the same class
   - Cannot-link: `(xᵢ, xⱼ) ∈ C` if gestures i and j are known to be different classes
@@ -642,63 +675,60 @@ Train an autoencoder to learn feature representations:
 
 **Loss Function**:
 
-\[
-\mathcal{L}_{\text{AE}} = \frac{1}{N} \sum_{n=1}^{N} \|x_n - \hat{x}_n\|^2
-\]
 
+$$
+\mathcal{L}_{\text{AE}} = \frac{1}{N} \sum_{n=1}^{N} \|x_n - \hat{x}_n\|^2
+$$
 **Step 3: Deep Clustering with Soft Constraints**
 
 **Cluster Assignment (Soft)**:
 
-\[
+
 q_{ik} = \frac{(1 + \|z_i - \mu_k\|^2)^{-1}}{\sum_{j=1}^{K} (1 + \|z_i - \mu_j\|^2)^{-1}}
-\]
+
 
 where `zᵢ = f_enc(xᵢ)` is the encoded representation of gesture i.
 
 **Target Distribution (Sharpened)**:
 
-\[
+
 p_{ik} = \frac{q_{ik}^2 / \sum_{i=1}^{N} q_{ik}}{\sum_{j=1}^{K} (q_{ij}^2 / \sum_{i=1}^{N} q_{ij})}
-\]
+
 
 **Constraint Loss** (novel contribution):
 
-\[
-\mathcal{L}_{\text{constraint}} = \sum_{(i,j) \in M} \|q_i - q_j\|^2 - \lambda \sum_{(i,j) \in C} \|q_i - q_j\|^2
-\]
 
+$$
+\mathcal{L}_{\text{constraint}} = \sum_{(i,j) \in M} \|q_i - q_j\|^2 - \lambda \sum_{(i,j) \in C} \|q_i - q_j\|^2
+$$
 where `qᵢ = [qᵢ₁, qᵢ₂, ..., qᵢₖ]` is the soft assignment vector for gesture i.
 
 **Total Loss**:
 
-\[
-\mathcal{L}_{\text{SC-DEC}} = \mathcal{L}_{\text{KL}} + \alpha \mathcal{L}_{\text{constraint}} + \beta \mathcal{L}_{\text{AE}}
-\]
 
+$$
+\mathcal{L}_{\text{SC-DEC}} = \mathcal{L}_{\text{KL}} + \alpha \mathcal{L}_{\text{constraint}} + \beta \mathcal{L}_{\text{AE}}
+$$
 where KL divergence loss is:
 
-\[
-\mathcal{L}_{\text{KL}} = \sum_{i=1}^{N} \sum_{k=1}^{K} p_{ik} \log \frac{p_{ik}}{q_{ik}}
-\]
 
+$$
+\mathcal{L}_{\text{KL}} = \sum_{i=1}^{N} \sum_{k=1}^{K} p_{ik} \log \frac{p_{ik}}{q_{ik}}
+$$
 **Step 4: Joint Optimization**
 
 Update encoder/decoder parameters and cluster centers using gradient descent:
 
-\[
+
+$$
 \theta^{\text{new}} = \theta - \eta \nabla_\theta \mathcal{L}_{\text{SC-DEC}}
-\]
-
-\[
 \mu_k^{\text{new}} = \mu_k - \eta \nabla_{\mu_k} \mathcal{L}_{\text{SC-DEC}}
-\]
-
+$$
 **Application to X, Y, Z Gesture Data**:
-- The encoder learns non-linear transformations: `[x₁, y₁, z₁, ..., x₂₁, y₂₁, z₂₁] → z ∈ ℝ^d`
-- This captures complex spatial relationships (e.g., "when thumb is high, index finger is typically low")
+- The encoder learns non-linear transformations: `[x₁, y₁, z₁, ..., x₄₂, y₄₂, z₄₂] → z ∈ ℝ^d`
+- This captures complex spatial relationships across 42 landmarks (e.g., "when left thumb is high, right index finger is typically low", or inter-hand coordination patterns)
 - Soft constraints allow incorporating domain knowledge: "These two gesture sequences are both 'wave' gestures" (must-link) or "This is 'wave', that is 'pick'" (cannot-link)
-- The learned representation `z` is more discriminative than raw x, y, z coordinates
+- The learned representation `z` is more discriminative than raw 126-dimensional x, y, z coordinates
 
 ---
 
@@ -710,16 +740,16 @@ Update encoder/decoder parameters and cluster centers using gradient descent:
 
 **Step 1: Data Preparation**
 
-Same as GMM: `X ∈ ℝ^(N×D)` where D = 63 for x, y, z coordinates.
+Same as GMM: `X ∈ ℝ^(N×D)` where D = 126 for x, y, z coordinates (42 landmarks × 3 coordinates).
 
 **Step 2: Morphological Accuracy Metric**
 
 **Definition**: For data point `xₙ` and cluster center `μₖ`, morphological accuracy is:
 
-\[
-\text{MA}(x_n, \mu_k) = \frac{\sum_{j=1}^{D} \min(x_{nj}, \mu_{kj})}{\sum_{j=1}^{D} \max(x_{nj}, \mu_{kj})}
-\]
 
+$$
+\text{MA}(x_n, \mu_k) = \frac{\sum_{j=1}^{D} \min(x_{nj}, \mu_{kj})}{\sum_{j=1}^{D} \max(x_{nj}, \mu_{kj})}
+$$
 **Interpretation for X, Y, Z Data**:
 - Measures overlap between gesture `xₙ` and cluster prototype `μₖ` across all coordinate dimensions
 - Range: [0, 1], where 1 = perfect match
@@ -727,18 +757,18 @@ Same as GMM: `X ∈ ℝ^(N×D)` where D = 63 for x, y, z coordinates.
 
 **Step 3: Soft Membership Calculation**
 
-\[
+
 u_{nk} = \frac{\text{MA}(x_n, \mu_k)^m}{\sum_{j=1}^{K} \text{MA}(x_n, \mu_j)^m}
-\]
+
 
 where `m > 1` is the fuzziness parameter (typically m = 2).
 
 **Step 4: Cluster Center Update**
 
-\[
-\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} u_{nk}^m \cdot x_n}{\sum_{n=1}^{N} u_{nk}^m}
-\]
 
+$$
+\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} u_{nk}^m \cdot x_n}{\sum_{n=1}^{N} u_{nk}^m}
+$$
 **Step 5: Convergence**
 
 Repeat steps 3-4 until `|μₖ^(t+1) - μₖ^(t)| < ε` for all k.
@@ -767,17 +797,17 @@ For each new gesture frame `xₜ` arriving at time t:
 
 **Compute Alignment Scores** with existing clusters:
 
-\[
-\text{align}(x_t, C_k) = \frac{1}{|C_k|} \sum_{x_i \in C_k} \text{sim}(x_t, x_i)
-\]
 
+$$
+\text{align}(x_t, C_k) = \frac{1}{|C_k|} \sum_{x_i \in C_k} \text{sim}(x_t, x_i)
+$$
 where `sim(xₜ, xᵢ)` is a similarity metric (e.g., cosine similarity or normalized dot product for x, y, z vectors).
 
 **Soft Assignment**:
 
-\[
+
 p_{tk} = \frac{\exp(\text{align}(x_t, C_k) / \tau)}{\sum_{j=1}^{K_t} \exp(\text{align}(x_t, C_j) / \tau)}
-\]
+
 
 where `τ` is a temperature parameter and `Kₜ` is the current number of clusters at time t.
 
@@ -795,22 +825,22 @@ where `τ` is a temperature parameter and `Kₜ` is the current number of cluste
 
 Periodically check if clusters should merge:
 
-\[
+
+$$
 \text{merge}(C_i, C_j) = \begin{cases}
 \text{True} & \text{if } \text{sim}(\mu_i, \mu_j) > \theta_{\text{merge}} \\
 \text{False} & \text{otherwise}
 \end{cases}
-\]
-
+$$
 where `μᵢ, μⱼ` are cluster centroids.
 
 **Step 5: Forgetting Mechanism**
 
 For non-stationary streams, downweight old gestures:
 
-\[
+
 w_n = \exp(-\lambda (t - t_n))
-\]
+
 
 where `λ` is the forgetting rate and `tₙ` is the arrival time of gesture n.
 
@@ -846,41 +876,41 @@ Streaming x, y, z gesture frames: `{x₁, x₂, ..., xₜ, ...}` arriving sequen
 
 **Responsibility Update** (with exponential forgetting):
 
-\[
-\gamma_{nk} \propto \pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k) \cdot w_n
-\]
 
+$$
+\gamma_{nk} \propto \pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k) \cdot w_n
+$$
 where `wₙ = exp(-λ(t - tₙ))` is the forgetting weight.
 
 **Step 4: Variational M-Step**
 
 **Update Variational Parameters**:
 
-\[
+
 q(\mu_k) = \mathcal{N}(\mu_k \mid m_k, S_k)
-\]
 
-\[
+
+
 m_k = \frac{\sum_{n=1}^{N} \gamma_{nk} w_n x_n}{\sum_{n=1}^{N} \gamma_{nk} w_n}
-\]
 
-\[
+
+
 S_k = \left(\sum_{n=1}^{N} \gamma_{nk} w_n\right)^{-1} \Sigma_0^{-1}
-\]
+
 
 **Update Mixing Weights**:
 
-\[
-\pi_k \propto \alpha + \sum_{n=1}^{N} \gamma_{nk} w_n
-\]
 
+$$
+\pi_k \propto \alpha + \sum_{n=1}^{N} \gamma_{nk} w_n
+$$
 **Step 5: New Cluster Creation**
 
 Probability of creating new cluster for gesture `xₜ`:
 
-\[
+
 p(\text{new cluster} \mid x_t) \propto \alpha \int \mathcal{N}(x_t \mid \mu, \Sigma) G_0(\mu, \Sigma) d\mu d\Sigma
-\]
+
 
 **Application to X, Y, Z Gesture Data**:
 - Handles non-stationary gesture distributions: if user's gesture style evolves, old patterns are gradually forgotten
@@ -921,3 +951,4 @@ p(\text{new cluster} \mid x_t) \propto \alpha \int \mathcal{N}(x_t \mid \mu, \Si
 
 **Document Updated**: December 2025  
 **Coverage Period**: 2020-2025 (Defensible Soft Clustering Methods Only)
+
