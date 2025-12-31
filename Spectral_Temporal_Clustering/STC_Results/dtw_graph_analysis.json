@@ -1,0 +1,66 @@
+{
+  "similarity_changes": {
+    "Cleaning": {
+      "mean": 0.005017420498587938,
+      "std": 0.008671142757421549,
+      "count": 200
+    },
+    "Come": {
+      "mean": 4.750116285515624e-05,
+      "std": 0.0002917157903656061,
+      "count": 200
+    },
+    "Emergency_calling": {
+      "mean": 0.04767978045821793,
+      "std": 0.06370035062441136,
+      "count": 195
+    },
+    "Give": {
+      "mean": 6.226092540135966e-05,
+      "std": 0.0003928916902571019,
+      "count": 200
+    },
+    "Good": {
+      "mean": 0.0,
+      "std": 0.0,
+      "count": 200
+    },
+    "Pick": {
+      "mean": 1.0517653755372433e-05,
+      "std": 2.899588444759529e-05,
+      "count": 200
+    },
+    "Stack": {
+      "mean": 0.00016357957491909447,
+      "std": 0.000449556860512951,
+      "count": 200
+    },
+    "Wave": {
+      "mean": 0.00029449951848421383,
+      "std": 0.0017695982922115686,
+      "count": 200
+    }
+  },
+  "connections": {
+    "no_dtw": {
+      "Cleaning": 0,
+      "Come": 0,
+      "Emergency_calling": 137,
+      "Give": 0,
+      "Good": 0,
+      "Pick": 0,
+      "Stack": 0,
+      "Wave": 0
+    },
+    "with_dtw": {
+      "Cleaning": 0,
+      "Come": 0,
+      "Emergency_calling": 162,
+      "Give": 0,
+      "Good": 0,
+      "Pick": 0,
+      "Stack": 0,
+      "Wave": 0
+    }
+  }
+}
