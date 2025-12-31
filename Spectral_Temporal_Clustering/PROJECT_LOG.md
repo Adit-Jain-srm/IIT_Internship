@@ -8,7 +8,7 @@
 
 This document tracks development, issues, resolutions, and current state of the STC implementation. Progress: **36.5625% → 45.625%** accuracy (+9.0625 percentage points) through systematic optimization.
 
-**Current Status**: ✅ **DTW Implementation Complete** - Ready for Testing
+**Current Status**: ✅ **DTW Implementation Complete** ❌ **Testing Shows Regression** - **RECOMMEND DISABLING**
 
 ---
 
@@ -19,9 +19,9 @@ This document tracks development, issues, resolutions, and current state of the 
 | Initial Implementation | ✅ Complete | 36.5625% |
 | A/B Testing - Temporal Features | ✅ Complete | 43.75% |
 | Parameter Optimization | ✅ Complete | 44.0625% |
-| Temporal Graph Sparsification | ✅ Complete | 45.625% |
-| DTW Implementation | ✅ Complete | Pending Test |
-| DTW Testing & Evaluation | ⏳ Pending | TBD |
+| Temporal Graph Sparsification | ✅ Complete | **45.625%** ✅ **BEST** |
+| DTW Implementation | ✅ Complete | - |
+| DTW Testing & Evaluation | ✅ Complete | **37.5%** ❌ **REGRESSION** |
 
 ---
 
@@ -131,7 +131,7 @@ This document tracks development, issues, resolutions, and current state of the 
 
 ---
 
-### Issue #8: Missing Sequence Alignment ✅ **IMPLEMENTED**
+### Issue #8: Missing Sequence Alignment ✅ **IMPLEMENTED** ❌ **REGRESSION OBSERVED**
 
 **Severity**: High  
 **Impact**: Gestures with timing variations penalized incorrectly
@@ -141,11 +141,26 @@ This document tracks development, issues, resolutions, and current state of the 
 - `_dtw_align_sequences()`: Aligns sequences before feature extraction
 - Added `use_dtw` and `dtw_radius` parameters
 
-**Status**: ✅ Implemented - Ready for testing
+**Test Results**: ❌ **REGRESSION**
+- **Overall Accuracy**: 45.625% → 37.5% (-8.125 percentage points)
+- **Emergency_calling**: 97.5% → 0% (all misclassified as Cleaning) ❌ **CRITICAL**
+- **Come**: 35% → 50% (+15%) ✅ **Improved**
+- **Wave**: 12.5% → 27.5% (+15%) ✅ **Improved**
+- **Pick**: 0% → 2.5% (+2.5%) ⚠️ **Minimal improvement**
 
-**Expected Impact**: +5-10% accuracy (especially Pick, Come, Wave)
+**Root Cause** (See `DTW_EMERGENCY_CALLING_INVESTIGATION.md` for detailed analysis):
+- ✅ **CONFIRMED**: DTW makes Emergency_calling sequences more similar to each other (+0.0477)
+- ✅ **CONFIRMED**: This creates a tighter Emergency_calling cluster (+25 intra-cluster connections: 137 → 162)
+- ✅ **CONFIRMED**: The tighter cluster changes the graph Laplacian, affecting spectral embedding
+- ✅ **CONFIRMED**: In spectral space, the tighter Emergency_calling cluster merges with Cleaning cluster
+- **Key Insight**: The issue is NOT direct pairwise similarity, but **graph structure changes** that affect spectral clustering. Emergency_calling vs Cleaning similarity only increases by +0.0050, but the graph structure changes cause cluster merging.
 
-**Next Steps**: Test DTW, compare with 45.625% baseline, optimize parameters
+**Status**: ✅ Implemented ❌ **CAUSES REGRESSION** - ✅ **DISABLED** (use_dtw=False in notebook)
+
+**Recommendation**: 
+- **DISABLE DTW** (use_dtw=False) - Use optimal configuration without DTW
+- **Alternative**: Implement gesture-specific DTW (only for Come, Wave, Pick)
+- **Investigation Needed**: Why does DTW destroy Emergency_calling recognition?
 
 ---
 
@@ -170,6 +185,8 @@ This document tracks development, issues, resolutions, and current state of the 
 
 ## Current Performance Metrics
 
+### WITHOUT DTW (Optimal Configuration) ✅ **BEST**
+
 **Overall Accuracy**:
 - STC: **45.625%** (146/320)
 - GMM: 43.75% (140/320)
@@ -190,12 +207,34 @@ This document tracks development, issues, resolutions, and current state of the 
 - ❌ Good: 0.00%
 - ❌ Pick: 0.00%
 
-**Optimal Configuration**:
+### WITH DTW (Current - REGRESSION) ❌
+
+**Overall Accuracy**:
+- STC: **37.5%** (120/320) ❌ **-8.125% from optimal**
+- GMM: 43.75% (140/320)
+- **STC now UNDERPERFORMS GMM by 6.25 percentage points**
+
+**Clustering Quality** (with DTW):
+- Silhouette: 0.7000 (vs GMM: 0.5335) - **+31.22%** (improved)
+- Davies-Bouldin: 0.4915 (vs GMM: 0.9114) - **+46.08%** (worse than without DTW)
+- Calinski-Harabasz: 3482.46 (vs GMM: 3453.01) - **+0.85%** (worse than without DTW)
+
+**Per-Gesture Accuracy (STC with DTW)**:
+- ✅ Cleaning: 100.00% (no change)
+- ❌ Emergency_calling: 0.00% ❌ **CRITICAL REGRESSION** (was 97.5%)
+- ✅ Stack: 70.00% (no change)
+- ⚠️ Give: 50.00% (no change)
+- ✅ Come: 50.00% ✅ **+15% improvement**
+- ❌ Wave: 27.50% ✅ **+15% improvement** (but still poor)
+- ❌ Good: 0.00% (no change)
+- ❌ Pick: 2.50% ⚠️ **+2.5% minimal improvement**
+
+**Optimal Configuration** (RECOMMENDED):
 - Alpha: 0.3 (70% temporal, 30% spatial)
 - Spatial neighbors: 5
 - Temporal threshold: 0.3
 - Temporal weights: Balanced (50/50)
-- DTW: Enabled (pending test)
+- **DTW: DISABLED** ❌ (causes regression)
 
 ---
 
@@ -227,29 +266,34 @@ This document tracks development, issues, resolutions, and current state of the 
     ↓ +0.3125%
 44.0625%  (Parameter optimization)
     ↓ +1.5625%
-45.625%   (Temporal graph sparsification)
-    ↓ +TBD
-?%        (DTW - PENDING TEST)
+45.625%   (Temporal graph sparsification) ✅ BEST
+    ↓ -8.125%
+37.5%     (DTW - REGRESSION) ❌
 ```
 
-**Total Improvement**: +9.0625 percentage points  
-**Expected with DTW**: 50-55%  
+**Total Improvement**: +9.0625 percentage points (without DTW)  
+**Current with DTW**: +0.9375 percentage points (from initial)  
+**Recommendation**: **DISABLE DTW** - Use 45.625% configuration  
 **Target**: 70-80%  
-**Remaining Gap**: ~15-30 percentage points
+**Remaining Gap**: ~24-35 percentage points (from optimal 45.625%)
 
 ---
 
 ## Improvements
 
 ### Immediate
-1. Test DTW implementation - measure accuracy impact
-2. Optimize DTW parameters if needed
-3. Address Good gesture (needs specialized features, DTW won't help)
+1. ✅ **DTW tested** - Results show regression (45.625% → 37.5%)
+2. ✅ **DTW DISABLED** - Updated notebook to use_dtw=False
+3. ✅ **Emergency_calling failure investigated** - Root cause identified (graph structure changes)
+4. ✅ **Priority 3 testing added** - Cell 9 tests lower alpha values (0.2, 0.1, 0.0)
+5. Address Good gesture (needs specialized features, DTW doesn't help)
 
 ### Short-term (1-2 weeks)
-1. Complete DTW testing and optimization
-2. Test lower alpha values (0.2, 0.1, 0.0)
-3. Fine-tune threshold around 0.3
+1. ✅ **DTW testing complete** - Regression observed, recommend disabling
+2. **Implement gesture-specific DTW** - Use DTW only for Come, Wave, Pick (not Emergency_calling)
+3. Test lower alpha values (0.2, 0.1, 0.0) with DTW disabled
+4. Fine-tune threshold around 0.3
+5. Investigate why DTW causes Emergency_calling to fail completely
 
 ### Medium-term (2-4 weeks)
 1. Implement specialized features (hand proximity, FFT)
@@ -276,5 +320,8 @@ This document tracks development, issues, resolutions, and current state of the 
 
 ---
 
-**Document Version**: 1.0  
-**Next Review**: After DTW testing
+**Document Version**: 2.0  
+**Last Updated**: After DTW testing - **REGRESSION OBSERVED**  
+**Key Finding**: DTW causes 8.125% accuracy regression (45.625% → 37.5%)  
+**Recommendation**: **DISABLE DTW** - Use optimal configuration (45.625% accuracy)  
+**Next Review**: After investigating DTW failure or implementing gesture-specific DTW
