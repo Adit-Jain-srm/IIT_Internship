@@ -530,12 +530,14 @@ For each data point `xₙ` (a 126-dimensional gesture feature vector) and each c
 $$
 \gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j)}
 $$
+
 where the multivariate Gaussian probability density function is:
 
 
 $$
 \mathcal{N}(x_n \mid \mu_k, \Sigma_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}(x_n - \mu_k)^T \Sigma_k^{-1} (x_n - \mu_k)\right)
 $$
+
 **Interpretation for X, Y, Z Data**:
 - `γₙₖ` represents the probability that gesture frame `xₙ` belongs to gesture class k
 - The Gaussian `𝒩(xₙ | μₖ, Σₖ)` measures how well the x, y, z coordinates match the learned distribution for gesture k
@@ -547,16 +549,18 @@ $$
 
 
 $$
-\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{N_k}
+\mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{N_k}
 $$
+
 where `Nₖ = Σₙ γₙₖ` is the effective number of points assigned to component k.
 
 **Updated Covariance Matrices** (capture shape and orientation of gesture clusters):
 
 
 $$
-\Sigma_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\text{new}})(x_n - \mu_k^{\text{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
+\Sigma_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\mathrm{new}})(x_n - \mu_k^{\mathrm{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
+
 **Interpretation for X, Y, Z Data**:
 - `Σₖ` is a 126×126 matrix capturing correlations between all coordinate pairs
 - Diagonal elements: variance of each x, y, z coordinate dimension across all 42 landmarks
@@ -566,8 +570,9 @@ $$
 
 
 $$
-\pi_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk}}{N} = \frac{N_k}{N}
+\pi_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk}}{N} = \frac{N_k}{N}
 $$
+
 **Step 6: Convergence Check**
 
 The EM algorithm repeats E-Step and M-Step until:
@@ -618,12 +623,14 @@ Compute responsibilities using feature-weighted distances:
 $$
 \gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j, w_j)}
 $$
+
 where the feature-weighted Gaussian is:
 
 
 $$
 \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}\sum_{j=1}^{D} w_{kj} \frac{(x_{nj} - \mu_{kj})^2}{\sigma_{kj}^2}\right)
 $$
+
 **Key Innovation**: The weights `wₖⱼ` downweight irrelevant features. For gesture classification:
 - If `wₖⱼ ≈ 0`: Feature j (e.g., z-coordinate of pinky) is irrelevant for gesture k
 - If `wₖⱼ ≈ 1`: Feature j (e.g., x-coordinate of thumb) is highly relevant for gesture k
@@ -633,7 +640,7 @@ $$
 **Update Feature Weights** (novel contribution of ESM):
 
 $$
-w_{kj}^{\text{new}} = \frac{\exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nj} - \mu_{kj})^2 / \sigma_{kj}^2)}{\sum_{d=1}^{D} \exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nd} - \mu_{kd})^2 / \sigma_{kd}^2)}
+w_{kj}^{\mathrm{new}} = \frac{\exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nj} - \mu_{kj})^2 / \sigma_{kj}^2)}{\sum_{d=1}^{D} \exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nd} - \mu_{kd})^2 / \sigma_{kd}^2)}
 $$
 
 where `β` is a temperature parameter controlling feature selection strength.
@@ -642,9 +649,10 @@ where `β` is a temperature parameter controlling feature selection strength.
 
 
 $$
-\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}}
-\Sigma_k^{\text{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\text{new}})(x_n - \mu_k^{\text{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
+\mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}}
+\Sigma_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\mathrm{new}})(x_n - \mu_k^{\mathrm{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
+
 **Application to X, Y, Z Gesture Data**:
 - ESM automatically identifies which landmarks (from 42 landmarks) are most discriminative for each gesture
 - Example: For "wave" gesture, ESM might learn that `w_wave,left_thumb_x ≈ 0.9` and `w_wave,right_pinky_z ≈ 0.1`, indicating left thumb x-coordinate is critical while right pinky z-coordinate is less important
@@ -679,6 +687,7 @@ Train an autoencoder to learn feature representations:
 $$
 \mathcal{L}_{\text{AE}} = \frac{1}{N} \sum_{n=1}^{N} \|x_n - \hat{x}_n\|^2
 $$
+
 **Step 3: Deep Clustering with Soft Constraints**
 
 **Cluster Assignment (Soft)**:
@@ -701,6 +710,7 @@ p_{ik} = \frac{q_{ik}^2 / \sum_{i=1}^{N} q_{ik}}{\sum_{j=1}^{K} (q_{ij}^2 / \sum
 $$
 \mathcal{L}_{\text{constraint}} = \sum_{(i,j) \in M} \|q_i - q_j\|^2 - \lambda \sum_{(i,j) \in C} \|q_i - q_j\|^2
 $$
+
 where `qᵢ = [qᵢ₁, qᵢ₂, ..., qᵢₖ]` is the soft assignment vector for gesture i.
 
 **Total Loss**:
@@ -709,21 +719,24 @@ where `qᵢ = [qᵢ₁, qᵢ₂, ..., qᵢₖ]` is the soft assignment vector fo
 $$
 \mathcal{L}_{\text{SC-DEC}} = \mathcal{L}_{\text{KL}} + \alpha \mathcal{L}_{\text{constraint}} + \beta \mathcal{L}_{\text{AE}}
 $$
+
 where KL divergence loss is:
 
 
 $$
 \mathcal{L}_{\text{KL}} = \sum_{i=1}^{N} \sum_{k=1}^{K} p_{ik} \log \frac{p_{ik}}{q_{ik}}
 $$
+
 **Step 4: Joint Optimization**
 
 Update encoder/decoder parameters and cluster centers using gradient descent:
 
 
 $$
-\theta^{\text{new}} = \theta - \eta \nabla_\theta \mathcal{L}_{\text{SC-DEC}}
-\mu_k^{\text{new}} = \mu_k - \eta \nabla_{\mu_k} \mathcal{L}_{\text{SC-DEC}}
+\theta^{\mathrm{new}} = \theta - \eta \nabla_\theta \mathcal{L}_{\text{SC-DEC}}
+\mu_k^{\mathrm{new}} = \mu_k - \eta \nabla_{\mu_k} \mathcal{L}_{\text{SC-DEC}}
 $$
+
 **Application to X, Y, Z Gesture Data**:
 - The encoder learns non-linear transformations: `[x₁, y₁, z₁, ..., x₄₂, y₄₂, z₄₂] → z ∈ ℝ^d`
 - This captures complex spatial relationships across 42 landmarks (e.g., "when left thumb is high, right index finger is typically low", or inter-hand coordination patterns)
@@ -750,6 +763,7 @@ Same as GMM: `X ∈ ℝ^(N×D)` where D = 126 for x, y, z coordinates (42 landma
 $$
 \text{MA}(x_n, \mu_k) = \frac{\sum_{j=1}^{D} \min(x_{nj}, \mu_{kj})}{\sum_{j=1}^{D} \max(x_{nj}, \mu_{kj})}
 $$
+
 **Interpretation for X, Y, Z Data**:
 - Measures overlap between gesture `xₙ` and cluster prototype `μₖ` across all coordinate dimensions
 - Range: [0, 1], where 1 = perfect match
@@ -767,8 +781,9 @@ where `m > 1` is the fuzziness parameter (typically m = 2).
 
 
 $$
-\mu_k^{\text{new}} = \frac{\sum_{n=1}^{N} u_{nk}^m \cdot x_n}{\sum_{n=1}^{N} u_{nk}^m}
+\mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} u_{nk}^m \cdot x_n}{\sum_{n=1}^{N} u_{nk}^m}
 $$
+
 **Step 5: Convergence**
 
 Repeat steps 3-4 until `|μₖ^(t+1) - μₖ^(t)| < ε` for all k.
@@ -801,6 +816,7 @@ For each new gesture frame `xₜ` arriving at time t:
 $$
 \text{align}(x_t, C_k) = \frac{1}{|C_k|} \sum_{x_i \in C_k} \text{sim}(x_t, x_i)
 $$
+
 where `sim(xₜ, xᵢ)` is a similarity metric (e.g., cosine similarity or normalized dot product for x, y, z vectors).
 
 **Soft Assignment**:
@@ -832,6 +848,7 @@ $$
 \text{False} & \text{otherwise}
 \end{cases}
 $$
+
 where `μᵢ, μⱼ` are cluster centroids.
 
 **Step 5: Forgetting Mechanism**
@@ -880,6 +897,7 @@ Streaming x, y, z gesture frames: `{x₁, x₂, ..., xₜ, ...}` arriving sequen
 $$
 \gamma_{nk} \propto \pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k) \cdot w_n
 $$
+
 where `wₙ = exp(-λ(t - tₙ))` is the forgetting weight.
 
 **Step 4: Variational M-Step**
@@ -904,6 +922,7 @@ S_k = \left(\sum_{n=1}^{N} \gamma_{nk} w_n\right)^{-1} \Sigma_0^{-1}
 $$
 \pi_k \propto \alpha + \sum_{n=1}^{N} \gamma_{nk} w_n
 $$
+
 **Step 5: New Cluster Creation**
 
 Probability of creating new cluster for gesture `xₜ`:
