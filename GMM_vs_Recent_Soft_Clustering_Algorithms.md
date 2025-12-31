@@ -647,9 +647,11 @@ where `β` is a temperature parameter controlling feature selection strength.
 
 **Update Means and Covariances** (same as GMM, but using weighted features):
 
-
 $$
 \mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}}
+$$
+
+$$
 \Sigma_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\mathrm{new}})(x_n - \mu_k^{\mathrm{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
 
@@ -692,17 +694,17 @@ $$
 
 **Cluster Assignment (Soft)**:
 
-
+$$
 q_{ik} = \frac{(1 + \|z_i - \mu_k\|^2)^{-1}}{\sum_{j=1}^{K} (1 + \|z_i - \mu_j\|^2)^{-1}}
-
+$$
 
 where `zᵢ = f_enc(xᵢ)` is the encoded representation of gesture i.
 
 **Target Distribution (Sharpened)**:
 
-
+$$
 p_{ik} = \frac{q_{ik}^2 / \sum_{i=1}^{N} q_{ik}}{\sum_{j=1}^{K} (q_{ij}^2 / \sum_{i=1}^{N} q_{ij})}
-
+$$
 
 **Constraint Loss** (novel contribution):
 
@@ -731,9 +733,11 @@ $$
 
 Update encoder/decoder parameters and cluster centers using gradient descent:
 
-
 $$
 \theta^{\mathrm{new}} = \theta - \eta \nabla_\theta \mathcal{L}_{\text{SC-DEC}}
+$$
+
+$$
 \mu_k^{\mathrm{new}} = \mu_k - \eta \nabla_{\mu_k} \mathcal{L}_{\text{SC-DEC}}
 $$
 
@@ -771,9 +775,9 @@ $$
 
 **Step 3: Soft Membership Calculation**
 
-
+$$
 u_{nk} = \frac{\text{MA}(x_n, \mu_k)^m}{\sum_{j=1}^{K} \text{MA}(x_n, \mu_j)^m}
-
+$$
 
 where `m > 1` is the fuzziness parameter (typically m = 2).
 
@@ -821,9 +825,9 @@ where `sim(xₜ, xᵢ)` is a similarity metric (e.g., cosine similarity or norma
 
 **Soft Assignment**:
 
-
+$$
 p_{tk} = \frac{\exp(\text{align}(x_t, C_k) / \tau)}{\sum_{j=1}^{K_t} \exp(\text{align}(x_t, C_j) / \tau)}
-
+$$
 
 where `τ` is a temperature parameter and `Kₜ` is the current number of clusters at time t.
 
@@ -855,9 +859,9 @@ where `μᵢ, μⱼ` are cluster centroids.
 
 For non-stationary streams, downweight old gestures:
 
-
+$$
 w_n = \exp(-\lambda (t - t_n))
-
+$$
 
 where `λ` is the forgetting rate and `tₙ` is the arrival time of gesture n.
 
@@ -904,17 +908,17 @@ where `wₙ = exp(-λ(t - tₙ))` is the forgetting weight.
 
 **Update Variational Parameters**:
 
-
+$$
 q(\mu_k) = \mathcal{N}(\mu_k \mid m_k, S_k)
+$$
 
-
-
+$$
 m_k = \frac{\sum_{n=1}^{N} \gamma_{nk} w_n x_n}{\sum_{n=1}^{N} \gamma_{nk} w_n}
+$$
 
-
-
+$$
 S_k = \left(\sum_{n=1}^{N} \gamma_{nk} w_n\right)^{-1} \Sigma_0^{-1}
-
+$$
 
 **Update Mixing Weights**:
 
@@ -927,9 +931,9 @@ $$
 
 Probability of creating new cluster for gesture `xₜ`:
 
-
+$$
 p(\text{new cluster} \mid x_t) \propto \alpha \int \mathcal{N}(x_t \mid \mu, \Sigma) G_0(\mu, \Sigma) d\mu d\Sigma
-
+$$
 
 **Application to X, Y, Z Gesture Data**:
 - Handles non-stationary gesture distributions: if user's gesture style evolves, old patterns are gradually forgotten
