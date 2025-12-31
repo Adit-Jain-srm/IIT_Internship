@@ -314,8 +314,10 @@ def evaluate_models_on_data(data_dir='30 DECEMBER', model_paths=None):
         print(f"\nProcessing {folder_name} folder (Ground truth: {ground_truth_class})...")
         
         # Find all raw sensor log CSV files
+        # Note: We use raw_sensor_log*.csv files (with Sensor_1, Sensor_2, Sensor_3, Sensor_4 readings)
+        # NOT final_sensor_features*.csv files (which have aggregated features in rows, not raw readings)
         csv_files = sorted(folder_path.glob('raw_sensor_log*.csv'))
-        print(f"  Found {len(csv_files)} raw sensor log files")
+        print(f"  Found {len(csv_files)} raw sensor log files (excluding final_sensor_features files)")
         
         # Collect all sensor readings from this folder
         folder_sensor_data = []
