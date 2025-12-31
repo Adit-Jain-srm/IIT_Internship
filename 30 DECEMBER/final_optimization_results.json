@@ -1,0 +1,99 @@
+{
+  "timestamp": "2025-12-31T11:51:10.891722",
+  "best_model": {
+    "feature_name": "v3_optimal",
+    "n_features": 15,
+    "covariance_type": "diag",
+    "test_accuracy": 0.42224744608399545,
+    "test_f1": 0.3215190653765268,
+    "n_classes_predicted": 2,
+    "per_class_accuracy": {
+      "COLD": 0.2775800711743772,
+      "NORMAL": 0.901840490797546,
+      "HOT": 0.0
+    }
+  },
+  "all_results": [
+    {
+      "feature_name": "v3_optimal",
+      "n_features": 15,
+      "covariance_type": "diag",
+      "test_accuracy": 0.42224744608399545,
+      "test_f1": 0.3215190653765268,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.38002270147559586
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 13,
+      "covariance_type": "tied",
+      "test_accuracy": 0.40408626560726446,
+      "test_f1": 0.2778779339754929,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.363677639046538
+    },
+    {
+      "feature_name": "v3_optimal",
+      "n_features": 15,
+      "covariance_type": "tied",
+      "test_accuracy": 0.3961407491486947,
+      "test_f1": 0.25203179013890525,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.35652667423382517
+    },
+    {
+      "feature_name": "v1_simple",
+      "n_features": 11,
+      "covariance_type": "tied",
+      "test_accuracy": 0.3836549375709421,
+      "test_f1": 0.28972162114590033,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.34528944381384785
+    },
+    {
+      "feature_name": "v1_simple",
+      "n_features": 11,
+      "covariance_type": "diag",
+      "test_accuracy": 0.38024971623155507,
+      "test_f1": 0.22138590391982937,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.3422247446083995
+    },
+    {
+      "feature_name": "v3_optimal",
+      "n_features": 15,
+      "covariance_type": "full",
+      "test_accuracy": 0.3779795686719637,
+      "test_f1": 0.29903369933262647,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.3401816118047673
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 13,
+      "covariance_type": "diag",
+      "test_accuracy": 0.3745743473325766,
+      "test_f1": 0.20963914485306187,
+      "n_classes_predicted": 2,
+      "balanced_score": 0.3371169125993189
+    },
+    {
+      "feature_name": "v1_simple",
+      "n_features": 11,
+      "covariance_type": "full",
+      "test_accuracy": 0.37003405221339386,
+      "test_f1": 0.1998858343356527,
+      "n_classes_predicted": 1,
+      "balanced_score": 0.29602724177071504
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 13,
+      "covariance_type": "full",
+      "test_accuracy": 0.37003405221339386,
+      "test_f1": 0.1998858343356527,
+      "n_classes_predicted": 1,
+      "balanced_score": 0.29602724177071504
+    }
+  ]
+}
