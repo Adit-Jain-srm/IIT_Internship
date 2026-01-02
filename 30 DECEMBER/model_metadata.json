@@ -1,0 +1,89 @@
+{
+  "timestamp": "2025-12-31T16:33:35.092531",
+  "best_model": {
+    "feature_name": "v3_comprehensive",
+    "n_features": 16,
+    "covariance_type": "diag",
+    "test_accuracy": 0.4188422247446084,
+    "test_f1": 0.0,
+    "n_classes_predicted": 2,
+    "per_class_accuracy": {
+      "COLD_OR_NORMAL": 0.0,
+      "HOT": 0.0
+    }
+  },
+  "all_configurations": [
+    {
+      "feature_name": "v3_comprehensive",
+      "n_features": 16,
+      "covariance_type": "diag",
+      "test_accuracy": 0.4188422247446084,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 15,
+      "covariance_type": "diag",
+      "test_accuracy": 0.41657207718501704,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v1_basic",
+      "n_features": 12,
+      "covariance_type": "diag",
+      "test_accuracy": 0.41316685584562995,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 15,
+      "covariance_type": "tied",
+      "test_accuracy": 0.40068104426787743,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v3_comprehensive",
+      "n_features": 16,
+      "covariance_type": "tied",
+      "test_accuracy": 0.40068104426787743,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v1_basic",
+      "n_features": 12,
+      "covariance_type": "tied",
+      "test_accuracy": 0.3961407491486947,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v1_basic",
+      "n_features": 12,
+      "covariance_type": "full",
+      "test_accuracy": 0.37911464245175935,
+      "test_f1": 0.0,
+      "n_classes_predicted": 2
+    },
+    {
+      "feature_name": "v2_enhanced",
+      "n_features": 15,
+      "covariance_type": "full",
+      "test_accuracy": 0.37003405221339386,
+      "test_f1": 0.0,
+      "n_classes_predicted": 1
+    },
+    {
+      "feature_name": "v3_comprehensive",
+      "n_features": 16,
+      "covariance_type": "full",
+      "test_accuracy": 0.37003405221339386,
+      "test_f1": 0.0,
+      "n_classes_predicted": 1
+    }
+  ]
+}
