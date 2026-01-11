@@ -531,12 +531,14 @@ $$
 \gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j)}
 $$
 
+
 where the multivariate Gaussian probability density function is:
 
 
 $$
 \mathcal{N}(x_n \mid \mu_k, \Sigma_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}(x_n - \mu_k)^T \Sigma_k^{-1} (x_n - \mu_k)\right)
 $$
+
 
 **Interpretation for X, Y, Z Data**:
 - `γₙₖ` represents the probability that gesture frame `xₙ` belongs to gesture class k
@@ -552,6 +554,7 @@ $$
 \mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{N_k}
 $$
 
+
 where `Nₖ = Σₙ γₙₖ` is the effective number of points assigned to component k.
 
 **Updated Covariance Matrices** (capture shape and orientation of gesture clusters):
@@ -560,6 +563,7 @@ where `Nₖ = Σₙ γₙₖ` is the effective number of points assigned to comp
 $$
 \Sigma_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\mathrm{new}})(x_n - \mu_k^{\mathrm{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
+
 
 **Interpretation for X, Y, Z Data**:
 - `Σₖ` is a 126×126 matrix capturing correlations between all coordinate pairs
@@ -572,6 +576,7 @@ $$
 $$
 \pi_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk}}{N} = \frac{N_k}{N}
 $$
+
 
 **Step 6: Convergence Check**
 
@@ -624,12 +629,14 @@ $$
 \gamma_{nk} = \frac{\pi_k \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n \mid \mu_j, \Sigma_j, w_j)}
 $$
 
+
 where the feature-weighted Gaussian is:
 
 
 $$
 \mathcal{N}(x_n \mid \mu_k, \Sigma_k, w_k) = \frac{1}{(2\pi)^{D/2} |\Sigma_k|^{1/2}} \exp\left(-\frac{1}{2}\sum_{j=1}^{D} w_{kj} \frac{(x_{nj} - \mu_{kj})^2}{\sigma_{kj}^2}\right)
 $$
+
 
 **Key Innovation**: The weights `wₖⱼ` downweight irrelevant features. For gesture classification:
 - If `wₖⱼ ≈ 0`: Feature j (e.g., z-coordinate of pinky) is irrelevant for gesture k
@@ -643,17 +650,23 @@ $$
 w_{kj}^{\mathrm{new}} = \frac{\exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nj} - \mu_{kj})^2 / \sigma_{kj}^2)}{\sum_{d=1}^{D} \exp(-\beta \sum_{n=1}^{N} \gamma_{nk} (x_{nd} - \mu_{kd})^2 / \sigma_{kd}^2)}
 $$
 
+
 where `β` is a temperature parameter controlling feature selection strength.
 
 **Update Means and Covariances** (same as GMM, but using weighted features):
+
 
 $$
 \mu_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} x_n}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
 
+
+
+
 $$
 \Sigma_k^{\mathrm{new}} = \frac{\sum_{n=1}^{N} \gamma_{nk} (x_n - \mu_k^{\mathrm{new}})(x_n - \mu_k^{\mathrm{new}})^T}{\sum_{n=1}^{N} \gamma_{nk}}
 $$
+
 
 **Application to X, Y, Z Gesture Data**:
 - ESM automatically identifies which landmarks (from 42 landmarks) are most discriminative for each gesture
@@ -689,6 +702,7 @@ Train an autoencoder to learn feature representations:
 $$
 \mathcal{L}_{\text{AE}} = \frac{1}{N} \sum_{n=1}^{N} \|x_n - \hat{x}_n\|^2
 $$
+
 
 **Step 3: Deep Clustering with Soft Constraints**
 
@@ -974,4 +988,3 @@ $$
 
 **Document Updated**: December 2025  
 **Coverage Period**: 2020-2025 (Defensible Soft Clustering Methods Only)
-
