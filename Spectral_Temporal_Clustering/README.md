@@ -121,3 +121,10 @@ joblib
 - α parameter can be tuned for optimal spatial/temporal balance
 - Works best with sequences of similar length (handled via zero-padding removal)
 
+## Author
+
+**Adit Jain** — IIT Internship (Imitation learning of robot manipulators by human demonstrations)
+
+- [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/-adit-jain)
+- [Certificate (PDF)](../Certificate_AditJain_modified.pdf)
+

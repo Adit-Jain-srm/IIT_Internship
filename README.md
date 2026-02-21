@@ -189,6 +189,8 @@ pip install networkx
 
 | Link | Description |
 |------|-------------|
+| [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/-adit-jain) | LinkedIn profile |
+| [Certificate (PDF)](Certificate_AditJain_modified.pdf) | IIT Internship certificate |
 | [Google Docs](https://docs.google.com/document/d/1jIz3uZFPw5u9ZN1OFFs-1CXvdU_o5K5PhW5sWPdlgEA/edit?usp=sharing) | Daily status & write-up |
 | [Google Slides](https://docs.google.com/presentation/d/1RE8Ny49hvOVgzPo7ZH6sdCAP0j7GWqqrd1zJg10WG58/edit?usp=sharing) | Research & slides |
 
