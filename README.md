@@ -1,5 +1,21 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/IIT-Internship-0066CC?style=for-the-badge" alt="IIT Internship" />
+<div align="center">
+
+# IIT Internship Research
+
+**Academic Research in Machine Learning and AI**
+
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Research](https://img.shields.io/badge/Research-IIT-orange)](https://www.iitd.ac.in/)
+[![Machine Learning](https://img.shields.io/badge/ML-Research-blue)](https://en.wikipedia.org/wiki/Machine_learning)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/Adit-Jain-srm/IIT_Internship)](https://github.com/Adit-Jain-srm/IIT_Internship)
+
+*Machine learning research conducted during IIT internship program.*
+
+</div>
+
+---
+
   <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
   <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=Jupyter&logoColor=white" alt="Jupyter" />
   <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn" />
