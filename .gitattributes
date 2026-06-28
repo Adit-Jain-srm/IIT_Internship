@@ -1,0 +1,4 @@
+*.ipynb linguist-generated
+*.csv linguist-generated
+*.pkl linguist-generated
+data/** linguist-vendored
